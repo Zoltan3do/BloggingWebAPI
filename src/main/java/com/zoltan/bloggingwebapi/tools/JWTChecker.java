@@ -40,6 +40,7 @@ public class JWTChecker extends OncePerRequestFilter {
         jwt.verifyToken(accessToken);
         UUID idUtente = UUID.fromString(jwt.getIdFromToken(accessToken));
         User utenteCorrente = this.userService.findById(idUtente);
+        
         // Authentication authentication = new UPAT...
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(utenteCorrente, null, utenteCorrente.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
