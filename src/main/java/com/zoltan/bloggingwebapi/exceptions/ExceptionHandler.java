@@ -22,4 +22,10 @@ public class ExceptionHandler {
         return new ErrorRespDTO(br.getMessage(), LocalDateTime.now());
     }
 
+    @org.springframework.web.bind.annotation.ExceptionHandler(UnauthorizedException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ErrorRespDTO unauthorizedHandler(UnauthorizedException u) {
+        return new ErrorRespDTO(u.getMessage(), LocalDateTime.now());
+    }
+
 }
