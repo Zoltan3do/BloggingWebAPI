@@ -1,6 +1,7 @@
 package com.zoltan.bloggingwebapi.services;
 
 import com.zoltan.bloggingwebapi.entities.BlogPost;
+import com.zoltan.bloggingwebapi.entities.User;
 import com.zoltan.bloggingwebapi.entities.enums.PostCategories;
 import com.zoltan.bloggingwebapi.exceptions.NotFoundException;
 import com.zoltan.bloggingwebapi.payloads.BlogPostDTO;
@@ -37,8 +38,8 @@ public class BlogPostService {
         return bprepo.findById(id).orElseThrow(() -> new NotFoundException("Il blog post con id " + id + "non è stata trovata"));
     }
 
-    public BlogPost save(BlogPostDTO body) {
-        BlogPost bp = new BlogPost(body.category(), body.title(), body.content(), body.author());
+    public BlogPost save(BlogPostDTO body, User user) {
+        BlogPost bp = new BlogPost(body.category(), body.title(), body.content(), user);
         return this.bprepo.save(bp);
     }
 
@@ -53,11 +54,6 @@ public class BlogPostService {
     public void deleteBlogPost(UUID id) {
         BlogPost bp = this.findById(id);
         bprepo.delete(bp);
-    }
-
-    //implementare la delete solo per blog posts personali
-    public void deleteMyBlogPost(UUID id) {
-
     }
 
 
