@@ -15,7 +15,6 @@ import java.util.UUID;
 @Entity
 @Table(name = "blog_posts")
 @ToString
-@Setter
 @NoArgsConstructor
 public class BlogPost {
     @Id
@@ -71,5 +70,33 @@ public class BlogPost {
 
     public User getUser() {
         return user;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public void setCategory(PostCategories category) {
+        this.category = category;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setCover(String cover) {
+        this.cover = cover;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public void setReadingTime(int readingTime) {
+        this.readingTime = readingTime;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

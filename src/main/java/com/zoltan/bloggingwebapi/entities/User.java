@@ -19,7 +19,6 @@ import java.util.UUID;
 @Entity
 @Table(name = "users")
 @ToString
-@Setter
 @NoArgsConstructor
 public class User implements UserDetails {
     @Id
@@ -93,4 +92,40 @@ public class User implements UserDetails {
         return this.getEmail();
     }
 
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public void setType(UserTypes type) {
+        this.type = type;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setBlogPosts(List<BlogPost> blogPosts) {
+        this.blogPosts = blogPosts;
+    }
 }
