@@ -64,22 +64,22 @@ public class BlogPostController {
     @DeleteMapping("/{id}")
     public void deleteBlogPost(@PathVariable UUID id, @AuthenticationPrincipal User currentUser) {
         BlogPost bp = bps.findById(id);
-        if (bp.getUser().getId() == currentUser.getId()) {
+        if (bp.getUser().getId().equals(currentUser.getId())) {
             bps.deleteBlogPost(id);
         }
     }
 
-    @PutMapping("/{blogId}")
-    public BlogPost updateBlogPost(@PathVariable UUID blogId, @RequestBody @Validated(Update.class) BlogPostDTO body, BindingResult validationResult, @AuthenticationPrincipal User currentUser) {
-        if (validationResult.hasErrors()) {
-            String message = validationResult.getAllErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage).collect(Collectors.joining(". "));
-            throw new BadRequestException("Ci sono stati errori nel payload! " + message);
+        @PutMapping("/{blogId}")
+        public BlogPost updateBlogPost(@PathVariable UUID blogId, @RequestBody @Validated(Update.class) BlogPostDTO body, BindingResult validationResult, @AuthenticationPrincipal User currentUser) {
+            if (validationResult.hasErrors()) {
+                String message = validationResult.getAllErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage).collect(Collectors.joining(". "));
+                throw new BadRequestException("Ci sono stati errori nel payload! " + message);
+            }
+            BlogPost bp = bps.findById(blogId);
+            if (bp.getUser().getId().equals(currentUser.getId())) {
+                return bps.updateBlogPost(blogId, body);
+            } else throw new UnauthorizedException("Non puoi modificare un post non tuo !");
         }
-        BlogPost bp = bps.findById(blogId);
-        if (bp.getUser().getId() == currentUser.getId()) {
-            return bps.updateBlogPost(blogId, body);
-        } else throw new UnauthorizedException("Non puoi modificare un post non tuo !");
-    }
 
 
 }

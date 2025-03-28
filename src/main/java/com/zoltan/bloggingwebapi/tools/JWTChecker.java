@@ -51,7 +51,7 @@ public class JWTChecker extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         AntPathMatcher apm = new AntPathMatcher();
-        List<String> paths = Arrays.asList("/auth/**","/swagger-ui/**","/v3/api-docs/**");
+        List<String> paths = Arrays.asList("/api/auth/**","/swagger-ui/**","/v3/api-docs/**");
         return paths.stream().anyMatch(path -> apm.match(path, request.getServletPath()));
     }
 

@@ -26,7 +26,7 @@ public class UserService {
                     throw new BadRequestException("Email " + payload.email() + "già in uso");
                 }
         );
-        User user = new User(payload.name(), payload.surname(), payload.email(), payload.birthday(), payload.password());
+        User user = new User(payload.name(), payload.surname(), payload.email(), payload.birthday(), bcrypt.encode(payload.password()));
         return this.userRepo.save(user);
     }
 

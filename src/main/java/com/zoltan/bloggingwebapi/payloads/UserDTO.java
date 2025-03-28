@@ -1,10 +1,7 @@
 package com.zoltan.bloggingwebapi.payloads;
 
 import com.zoltan.bloggingwebapi.payloads.validationGroups.Create;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
@@ -20,8 +17,8 @@ public record UserDTO(
         @Email(message = "L'email inserita non è valida")
         @Size(min = 6, message = "La mail deve contenere almeno 6 caratteri")
         String email,
-        @NotEmpty(message = "La data di nascita è obbligatoria", groups = Create.class)
-        @DateTimeFormat
+        @NotNull(message = "La data di nascita è obbligatoria", groups = Create.class)
+        @DateTimeFormat(pattern = "yyyy-MM-dd")
         LocalDate birthday,
         @NotEmpty(message = "La password è obbligatoria", groups = Create.class)
         @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\\\d)(?=.*[@$!%*?&])[A-Za-z\\\\d@$!%*?&]{8,}$", message = "La password non segue i criteri comuni")

@@ -9,13 +9,13 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.data.web.config.EnableSpringDataWebSupport;
 
 import java.util.UUID;
 
 @Entity
 @Table(name = "blog_posts")
 @ToString
-@NoArgsConstructor
 public class BlogPost {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -32,13 +32,14 @@ public class BlogPost {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @JsonBackReference
     private User user;
+
+    public BlogPost(){}
 
     public BlogPost(PostCategories category, String title, String content, User user) {
         this.category = category;
         this.title = title;
-        this.cover = "https://ui-avatars.com/api/?name=" + title + "+" + category;
+        this.cover = "https://ui-avatars.com/api/?name=" + title.trim() + "+" + category;
         this.content = content;
         this.readingTime =  Math.round( content.length() / 10);
         this.user = user;

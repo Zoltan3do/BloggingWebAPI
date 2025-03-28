@@ -22,7 +22,7 @@ public class SecurityService {
 
     public String checkCredentialsAndGenerateToken(LoginDTO body){
         User user = this.userService.findByEmail(body.email());
-        if(bcrypt.matches(body.password(), user.getEmail())){
+        if(bcrypt.matches(body.password(), user.getPassword())){
             return jwt.createToken(user);
         }else{
             throw new UnauthorizedException("Credenziali errate!");

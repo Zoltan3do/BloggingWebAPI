@@ -10,8 +10,6 @@ public record LoginDTO(
         @Email
         String email,
         @NotEmpty
-        @NotNull
-        @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\\\d)(?=.*[@$!%*?&])[A-Za-z\\\\d@$!%*?&]{8,}$", message = "La password è errrata")
         String password
 ) {
 }

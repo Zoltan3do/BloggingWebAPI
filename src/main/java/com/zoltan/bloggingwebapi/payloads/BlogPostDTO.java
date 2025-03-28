@@ -12,7 +12,7 @@ public record BlogPostDTO(
         @Size(min = 3, max = 16, message = "La lunghezza deve essere compresa tra 3 e 16 caratteri")
         String title,
         @NotEmpty(message = "Deve avere un contenuto", groups = Create.class)
-        @Size(min = 16, max = 150, message = "La lunghezza del contenuto deve essere tra i 16 e i 150 caratteri")
+        @Size(min = 16, max = 150, message = "La lunghezza del contenuto deve essere tra i 16 e i 255 caratteri")
         String content
 ) {
 

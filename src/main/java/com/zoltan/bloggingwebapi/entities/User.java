@@ -7,6 +7,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,10 +17,10 @@ import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
+
 @Entity
 @Table(name = "users")
 @ToString
-@NoArgsConstructor
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -27,7 +28,7 @@ public class User implements UserDetails {
     private UUID id;
 
     @Enumerated(EnumType.STRING)
-    private UserTypes type;
+    private UserTypes role;
 
     private String name;
     private String surname;
@@ -36,12 +37,13 @@ public class User implements UserDetails {
     private String avatar;
     private String password;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
-    @JsonManagedReference
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private List<BlogPost> blogPosts;
 
+    public User(){}
+
     public User(String name, String surname, String email, LocalDate birthday, String password) {
-        this.type = UserTypes.AUTHOR;
+        this.role = UserTypes.AUTHOR;
         this.name = name;
         this.surname = surname;
         this.email = email;
@@ -54,8 +56,8 @@ public class User implements UserDetails {
         return id;
     }
 
-    public UserTypes getType() {
-        return type;
+    public UserTypes getRole() {
+        return role;
     }
 
     public String getName() {
@@ -80,7 +82,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(this.type.name()));
+        return List.of(new SimpleGrantedAuthority(this.role.name()));
     }
 
     public String getPassword() {
@@ -97,8 +99,8 @@ public class User implements UserDetails {
         this.id = id;
     }
 
-    public void setType(UserTypes type) {
-        this.type = type;
+    public void setRole(UserTypes type) {
+        this.role = type;
     }
 
     public void setName(String name) {
