@@ -8,6 +8,7 @@ import com.zoltan.bloggingwebapi.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -52,6 +53,13 @@ public class UserController {
     @GetMapping("/find/{id}")
     public ResponseEntity<User> findById(@PathVariable UUID id) {
         User found = userService.findById(id);
+        return ResponseEntity.ok(found);
+    }
+
+    @PatchMapping("/changeRole/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<User> changeRole(@PathVariable UUID id) {
+        User found = userService.changeAuthority(id);
         return ResponseEntity.ok(found);
     }
 

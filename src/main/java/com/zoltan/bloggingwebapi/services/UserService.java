@@ -1,6 +1,7 @@
 package com.zoltan.bloggingwebapi.services;
 
 import com.zoltan.bloggingwebapi.entities.User;
+import com.zoltan.bloggingwebapi.entities.enums.UserTypes;
 import com.zoltan.bloggingwebapi.exceptions.BadRequestException;
 import com.zoltan.bloggingwebapi.exceptions.NotFoundException;
 import com.zoltan.bloggingwebapi.payloads.UserDTO;
@@ -56,5 +57,17 @@ public class UserService {
     public void deleteUser(UUID id) {
         User user = this.findById(id);
         userRepo.delete(user);
+    }
+
+    public User changeAuthority(UUID id) {
+        User found = this.findById(id);
+
+        if (found.getRole().equals(UserTypes.ADMIN)) {
+            found.setRole(UserTypes.AUTHOR);
+        } else {
+            found.setRole(UserTypes.ADMIN);
+        }
+
+        return userRepo.save(found);
     }
 }
