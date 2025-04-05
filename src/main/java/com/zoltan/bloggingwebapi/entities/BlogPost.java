@@ -41,7 +41,7 @@ public class BlogPost {
         this.title = title;
         this.cover = "https://ui-avatars.com/api/?name=" + title.trim() + "+" + category;
         this.content = content;
-        this.readingTime =  Math.round( content.length() / 10);
+        this.readingTime =  Math.round( (float) content.length() / 10);
         this.user = user;
     }
 

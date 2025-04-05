@@ -23,6 +23,5 @@ public record UserDTO(
         @NotEmpty(message = "La password è obbligatoria", groups = Create.class)
         @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\\\d)(?=.*[@$!%*?&])[A-Za-z\\\\d@$!%*?&]{8,}$", message = "La password non segue i criteri comuni")
         String password
-
 ) {
 }
