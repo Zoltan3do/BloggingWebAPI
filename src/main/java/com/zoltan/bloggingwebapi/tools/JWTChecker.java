@@ -33,14 +33,23 @@ public class JWTChecker extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull FilterChain filterChain) throws ServletException, IOException {
+        String path = request.getServletPath();
+
+        if (!path.startsWith("/api/")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         String authorizationHeader = request.getHeader("Authorization");
+
         if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer "))
             throw new UnauthorizedException("Inserire token nell' Authorization Header nel formato corretto !");
+
         String accessToken = authorizationHeader.split(" ")[1];
         jwt.verifyToken(accessToken);
         UUID idUtente = UUID.fromString(jwt.getIdFromToken(accessToken));
         User utenteCorrente = this.userService.findById(idUtente);
-        
+
         // Authentication authentication = new UPAT...
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(utenteCorrente, null, utenteCorrente.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -51,10 +60,9 @@ public class JWTChecker extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         AntPathMatcher apm = new AntPathMatcher();
-        List<String> paths = Arrays.asList("/api/auth/**","/swagger-ui/**","/v3/api-docs/**");
+        List<String> paths = Arrays.asList("/api/auth/**", "/swagger-ui/**", "/v3/api-docs/**");
         return paths.stream().anyMatch(path -> apm.match(path, request.getServletPath()));
     }
-
 
 
 }
