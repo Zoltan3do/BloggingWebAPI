@@ -1,5 +1,6 @@
 package com.zoltan.bloggingwebapi.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.zoltan.bloggingwebapi.entities.enums.UserTypes;
 import jakarta.persistence.*;
@@ -21,6 +22,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "users")
 @ToString
+@JsonIgnoreProperties("password")
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
