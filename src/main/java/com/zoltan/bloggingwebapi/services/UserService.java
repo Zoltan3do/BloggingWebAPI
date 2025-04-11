@@ -51,6 +51,8 @@ public class UserService {
         if (body.birthday() != null) utente.setBirthday(body.birthday());
         if (body.password() != null) utente.setPassword(bcrypt.encode(body.password()));
 
+        utente.setAvatar("https://ui-avatars.com/api/?name=" + utente.getName() + "+" + utente.getSurname());
+
         return userRepo.save(utente);
     }
 
