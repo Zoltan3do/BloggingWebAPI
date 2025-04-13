@@ -39,6 +39,23 @@ public class UserController {
         return userService.updateUser(currentUser.getId(), body);
     }
 
+    @PutMapping("/users/{id}")
+    public User updateProfile(
+            @PathVariable UUID id,
+            @RequestBody @Validated(Update.class) UserDTO body,
+            BindingResult validationResult) {
+
+        if (validationResult.hasErrors()) {
+            String message = validationResult.getAllErrors()
+                    .stream()
+                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                    .collect(Collectors.joining(". "));
+            throw new BadRequestException("Ci sono stati errori nel payload? " + message);
+        }
+
+        return userService.updateUser(id, body);
+    }
+
     @GetMapping("/")
     public ResponseEntity<List<User>> findAll() {
         List<User> users = userService.findAll();
@@ -48,6 +65,11 @@ public class UserController {
     @DeleteMapping("/deleteMe")
     public void removeProfile(@AuthenticationPrincipal User currentUser) {
         userService.deleteUser(currentUser.getId());
+    }
+
+    @DeleteMapping("/users/{id}")
+    public void removeProfile(@PathVariable UUID id) {
+        userService.deleteUser(id);
     }
 
     @GetMapping("/find/{id}")
@@ -61,6 +83,12 @@ public class UserController {
     public ResponseEntity<User> changeRole(@PathVariable UUID id) {
         User found = userService.changeAuthority(id);
         return ResponseEntity.ok(found);
+    }
+
+
+    @GetMapping("/getAll")
+    public List<User> getAll() {
+        return userService.getAll();
     }
 
 }

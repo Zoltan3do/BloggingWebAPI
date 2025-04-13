@@ -48,6 +48,9 @@ public class BlogPostService {
         if (body.category() != null) bp.setCategory(body.category());
         if (body.title() != null) bp.setTitle(body.title());
         if (body.content() != null) bp.setContent(body.content());
+
+        bp.setCover("https://ui-avatars.com/api/?name=" + bp.getTitle().trim() + "+" + bp.getCategory());
+
         return bprepo.save(bp);
     }
 

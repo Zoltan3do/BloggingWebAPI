@@ -35,5 +35,9 @@ public class FeedService {
         return feedRepository.count();
     }
 
+    public List<Feed> getAll() {
+        return feedRepository.findAll();
+    }
+
 
 }
