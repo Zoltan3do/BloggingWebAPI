@@ -39,6 +39,7 @@ public class UserController {
         return userService.updateUser(currentUser.getId(), body);
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping("/users/{id}")
     public User updateProfile(
             @PathVariable UUID id,
@@ -67,6 +68,7 @@ public class UserController {
         userService.deleteUser(currentUser.getId());
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/users/{id}")
     public void removeProfile(@PathVariable UUID id) {
         userService.deleteUser(id);
@@ -86,6 +88,7 @@ public class UserController {
     }
 
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/getAll")
     public List<User> getAll() {
         return userService.getAll();

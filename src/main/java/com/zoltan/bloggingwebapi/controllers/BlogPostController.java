@@ -16,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -69,6 +70,7 @@ public class BlogPostController {
         }
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/{id}")
     public void deleteBlogPostById(@PathVariable UUID id) {
         BlogPost bp = bps.findById(id);
@@ -87,6 +89,7 @@ public class BlogPostController {
         } else throw new UnauthorizedException("Non puoi modificare un post non tuo !");
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping("/{blogId}")
     public BlogPost updateBlogPostById(@PathVariable UUID blogId, @RequestBody @Validated(Update.class) BlogPostDTO body, BindingResult validationResult) {
         if (validationResult.hasErrors()) {
