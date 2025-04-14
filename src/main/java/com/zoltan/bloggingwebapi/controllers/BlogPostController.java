@@ -62,7 +62,7 @@ public class BlogPostController {
         return bps.save(body, currentUser);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/my/{id}")
     public void deleteBlogPost(@PathVariable UUID id, @AuthenticationPrincipal User currentUser) {
         BlogPost bp = bps.findById(id);
         if (bp.getUser().getId().equals(currentUser.getId())) {
@@ -77,7 +77,7 @@ public class BlogPostController {
         bps.deleteBlogPost(id);
     }
 
-    @PutMapping("/{blogId}")
+    @PutMapping("/my/{blogId}")
     public BlogPost updateBlogPost(@PathVariable UUID blogId, @RequestBody @Validated(Update.class) BlogPostDTO body, BindingResult validationResult, @AuthenticationPrincipal User currentUser) {
         if (validationResult.hasErrors()) {
             String message = validationResult.getAllErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage).collect(Collectors.joining(". "));
