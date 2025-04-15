@@ -1,6 +1,7 @@
 package com.zoltan.bloggingwebapi.payloads;
 
 import com.zoltan.bloggingwebapi.payloads.validationGroups.Create;
+import com.zoltan.bloggingwebapi.payloads.validationGroups.Update;
 import jakarta.validation.constraints.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -21,7 +22,8 @@ public record UserDTO(
         @DateTimeFormat(pattern = "yyyy-MM-dd")
         LocalDate birthday,
         @NotEmpty(message = "La password è obbligatoria", groups = Create.class)
-        @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\\\d)(?=.*[@$!%*?&])[A-Za-z\\\\d@$!%*?&]{8,}$", message = "La password non segue i criteri comuni")
+        @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$", message = "La password non segue i criteri comuni",
+                groups = {Create.class, Update.class})
         String password
 ) {
 }

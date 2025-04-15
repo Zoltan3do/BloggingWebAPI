@@ -40,7 +40,7 @@ public class UserController {
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    @PutMapping("/users/{id}")
+    @PutMapping("/{id}")
     public User updateProfile(
             @PathVariable UUID id,
             @RequestBody @Validated(Update.class) UserDTO body,
