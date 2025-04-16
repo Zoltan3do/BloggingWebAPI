@@ -40,6 +40,7 @@ public class User implements UserDetails {
     private String password;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    @JsonManagedReference
     private List<BlogPost> blogPosts;
 
     public User(){}

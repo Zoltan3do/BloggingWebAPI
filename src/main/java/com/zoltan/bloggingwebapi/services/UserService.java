@@ -1,5 +1,6 @@
 package com.zoltan.bloggingwebapi.services;
 
+import com.zoltan.bloggingwebapi.entities.BlogPost;
 import com.zoltan.bloggingwebapi.entities.User;
 import com.zoltan.bloggingwebapi.entities.enums.UserTypes;
 import com.zoltan.bloggingwebapi.exceptions.BadRequestException;
@@ -7,6 +8,9 @@ import com.zoltan.bloggingwebapi.exceptions.NotFoundException;
 import com.zoltan.bloggingwebapi.payloads.UserDTO;
 import com.zoltan.bloggingwebapi.repositories.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -73,7 +77,7 @@ public class UserService {
         return userRepo.save(found);
     }
 
-    public List<User> getAll() {
-        return userRepo.findAll();
+    public Page<User> getAll(Pageable pageable) {
+        return userRepo.findAll(pageable);
     }
 }

@@ -50,6 +50,7 @@ public class BlogPostService {
         if (body.content() != null) bp.setContent(body.content());
 
         bp.setCover("https://ui-avatars.com/api/?name=" + bp.getTitle().trim() + "+" + bp.getCategory());
+        bp.setReadingTime(Math.round( (float) bp.getContent().length() / 10));
 
         return bprepo.save(bp);
     }
