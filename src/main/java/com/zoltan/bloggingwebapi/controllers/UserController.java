@@ -73,7 +73,7 @@ public class UserController {
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    @DeleteMapping("/users/{id}")
+    @DeleteMapping("/{id}")
     public void removeProfile(@PathVariable UUID id) {
         userService.deleteUser(id);
     }
