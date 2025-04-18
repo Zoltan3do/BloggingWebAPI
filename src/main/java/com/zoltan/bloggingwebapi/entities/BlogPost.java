@@ -27,6 +27,8 @@ public class BlogPost {
 
     private String title;
     private String cover;
+
+    @Column(length = 2000)
     private String content;
     private int readingTime;
 
