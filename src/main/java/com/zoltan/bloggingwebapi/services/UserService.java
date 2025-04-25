@@ -32,6 +32,11 @@ public class UserService {
                 }
         );
         User user = new User(payload.name(), payload.surname(), payload.email(), payload.birthday(), bcrypt.encode(payload.password()));
+
+        long countUsers = this.userRepo.count();
+        if(countUsers == 0){
+            user.setRole(UserTypes.ADMIN);
+        }
         return this.userRepo.save(user);
     }
 
