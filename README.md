@@ -17,7 +17,7 @@ Questo è un progetto fullstack sviluppato con **React**, **Redux** e **Spring B
     - Spring Boot (Java)
     - Spring Security per l'autenticazione
     - JWT (JSON Web Tokens) per la gestione delle sessioni
-    - H2 Database (o altro database configurato)
+    - Postgres SQL Database (o altro database configurato)
     - JPA/Hibernate per l'accesso al database
 
 ## Funzionalità
